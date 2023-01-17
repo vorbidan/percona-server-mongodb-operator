@@ -1,0 +1,127 @@
+apiVersion: psmdb.percona.com/v1
+kind: PerconaServerMongoDB
+metadata:
+  name: serviceless-main
+spec:
+  allowUnsafeConfigurations: true
+  clusterServiceDNSMode: "Internal"
+  image: percona/percona-server-mongodb:5.0.14-12
+  imagePullPolicy: Always
+  secrets:
+    users: serviceless-secrets
+    ssl: serviceless-ssl
+    sslInternal: serviceless-ssl-internal
+    encryptionKey: serviceless-encryption-key
+  replsets:
+
+  - name: rs0
+    size: 2
+    externalNodes:
+    - host: serviceless-external-rs0-0.serviceless-external-rs0.serviceless-external.svc.cluster.local
+      port: 27017
+      votes: 0
+      priority: 0
+    - host: serviceless-external-rs0-1.serviceless-external-rs0.serviceless-external.svc.cluster.local
+      port: 27017
+      votes: 0
+      priority: 0
+    affinity:
+      antiAffinityTopologyKey: none
+    podDisruptionBudget:
+      maxUnavailable: 1
+    expose:
+      enabled: false
+      exposeType: ClusterIp
+    resources:
+      limits:
+        cpu: "300m"
+        memory: "0.5G"
+      requests:
+        cpu: "300m"
+        memory: "0.5G"
+    volumeSpec:
+      persistentVolumeClaim:
+        resources:
+          requests:
+            storage: 3Gi
+    nonvoting:
+      enabled: false
+      size: 3
+      affinity:
+        antiAffinityTopologyKey: none
+      podDisruptionBudget:
+        maxUnavailable: 1
+      resources:
+        limits:
+          cpu: "300m"
+          memory: "1G"
+        requests:
+          cpu: "300m"
+          memory: "0.5G"
+      volumeSpec:
+        persistentVolumeClaim:
+          resources:
+            requests:
+              storage: 3Gi
+    configuration: |
+      net:
+        tls:
+          mode: preferTLS
+      operationProfiling:
+        mode: slowOp
+    arbiter:
+      enabled: false
+      size: 1
+      affinity:
+        antiAffinityTopologyKey: none
+
+  sharding:
+    enabled: false
+    configsvrReplSet:
+      size: 1
+      externalNodes:
+      - host: serviceless-external-cfg-0.serviceless-external-cfg.serviceless-external.svc.cluster.local
+        port: 27017
+        votes: 0
+        priority: 0
+      affinity:
+        antiAffinityTopologyKey: none
+      podDisruptionBudget:
+        maxUnavailable: 1
+      expose:
+        enabled: false
+        exposeType: ClusterIp
+      resources:
+        limits:
+          cpu: "300m"
+          memory: "0.5G"
+        requests:
+          cpu: "300m"
+          memory: "0.5G"
+      volumeSpec:
+        persistentVolumeClaim:
+          resources:
+            requests:
+              storage: 3Gi
+      configuration: |
+        net:
+          tls:
+            mode: preferTLS
+        operationProfiling:
+          mode: slowOp
+
+    mongos:
+      size: 1
+      affinity:
+        antiAffinityTopologyKey: none
+      podDisruptionBudget:
+        maxUnavailable: 1
+      resources:
+        limits:
+          cpu: "300m"
+          memory: "0.5G"
+        requests:
+          cpu: "300m"
+          memory: "0.5G"
+      expose:
+        exposeType: ClusterIp

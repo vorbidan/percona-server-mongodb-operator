@@ -1,0 +1,50 @@
+{
+  "hosts": [
+    "serviceless-main-rs0",
+    "serviceless-main-rs0.serviceless-main",
+    "serviceless-main-rs0.serviceless-main.svc.cluster.local",
+    "*.serviceless-main-rs0",
+    "*.serviceless-main-rs0.serviceless-main",
+    "*.serviceless-main-rs0.serviceless-main.svc.cluster.local",
+    "serviceless-main-mongos",
+    "serviceless-main-mongos.serviceless-main",
+    "serviceless-main-mongos.serviceless-main.svc.cluster.local",
+    "*.serviceless-main-mongos",
+    "*.serviceless-main-mongos.serviceless-main",
+    "*.serviceless-main-mongos.serviceless-main.svc.cluster.local",
+    "serviceless-main-cfg",
+    "serviceless-main-cfg.serviceless-main",
+    "serviceless-main-cfg.serviceless-main.svc.cluster.local",
+    "*.serviceless-main-cfg",
+    "*.serviceless-main-cfg.serviceless-main",
+    "*.serviceless-main-cfg.serviceless-main.svc.cluster.local",
+    "serviceless-external-rs0",
+    "serviceless-external-rs0.serviceless-external",
+    "serviceless-external-rs0.serviceless-external.svc.cluster.local",
+    "*.serviceless-external-rs0",
+    "*.serviceless-external-rs0.serviceless-external",
+    "*.serviceless-external-rs0.serviceless-external.svc.cluster.local",    
+    "serviceless-external-mongos",
+    "serviceless-external-mongos.serviceless-external",
+    "serviceless-external-mongos.serviceless-external.svc.cluster.local",
+    "*.serviceless-external-mongos",
+    "*.serviceless-external-mongos.serviceless-external",
+    "*.serviceless-external-mongos.serviceless-external.svc.cluster.local",
+    "serviceless-external-cfg",
+    "serviceless-external-cfg.serviceless-external",
+    "serviceless-external-cfg.serviceless-external.svc.cluster.local",
+    "*.serviceless-external-cfg",
+    "*.serviceless-external-cfg.serviceless-external",
+    "*.serviceless-external-cfg.serviceless-external.svc.cluster.local"
+  ],
+  "names": [
+    {
+      "O": "PSMDB"
+    }
+  ],
+  "CN": "serviceless-external-nodes",
+  "key": {
+    "algo": "rsa",
+    "size": 2048
+  }
+}
