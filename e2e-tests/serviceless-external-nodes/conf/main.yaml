@@ -1,30 +1,30 @@
 apiVersion: psmdb.percona.com/v1
 kind: PerconaServerMongoDB
 metadata:
-  name: serviceless-main
+  name: mydb
 spec:
   allowUnsafeConfigurations: true
   clusterServiceDNSMode: "Internal"
   image: percona/percona-server-mongodb:5.0.14-12
   imagePullPolicy: Always
   secrets:
-    users: serviceless-secrets
-    ssl: serviceless-ssl
-    sslInternal: serviceless-ssl-internal
-    encryptionKey: serviceless-encryption-key
+    users: mydb-users
+    ssl: mydb-ssl
+    sslInternal: mydb-ssl-internal
+    encryptionKey: mydb-encryption-key
   replsets:
 
   - name: rs0
-    size: 2
+    size: 1
     externalNodes:
-    - host: serviceless-external-rs0-0.serviceless-external-rs0.serviceless-external.svc.cluster.local
+    - host: mydb-rs0-0.mydb-rs0.external.svc.cluster.local
       port: 27017
-      votes: 0
-      priority: 0
-    - host: serviceless-external-rs0-1.serviceless-external-rs0.serviceless-external.svc.cluster.local
+      votes: 1
+      priority: 1
+    - host: mydb-rs0-1.mydb-rs0.external.svc.cluster.local
       port: 27017
-      votes: 0
-      priority: 0
+      votes: 1
+      priority: 1
     affinity:
       antiAffinityTopologyKey: none
     podDisruptionBudget:
@@ -80,7 +80,7 @@ spec:
     configsvrReplSet:
       size: 1
       externalNodes:
-      - host: serviceless-external-cfg-0.serviceless-external-cfg.serviceless-external.svc.cluster.local
+      - host: mydb-cfg-0.mydb-cfg.external.svc.cluster.local
         port: 27017
         votes: 0
         priority: 0

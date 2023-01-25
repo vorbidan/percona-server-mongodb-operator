@@ -1,7 +1,7 @@
 apiVersion: psmdb.percona.com/v1
 kind: PerconaServerMongoDB
 metadata:
-  name: serviceless-external
+  name: mydb
 spec:
   unmanaged: true
   allowUnsafeConfigurations: true
@@ -9,14 +9,14 @@ spec:
   image: percona/percona-server-mongodb:5.0.14-12
   imagePullPolicy: Always
   secrets:
-    users: serviceless-secrets
-    ssl: serviceless-ssl
-    sslInternal: serviceless-ssl-internal
-    encryptionKey: serviceless-encryption-key
+    users: mydb-users
+    ssl: mydb-ssl
+    sslInternal: mydb-ssl-internal
+    encryptionKey: mydb-encryption-key
   replsets:
 
   - name: rs0
-    size: 1
+    size: 2
     affinity:
       antiAffinityTopologyKey: none
     podDisruptionBudget:
